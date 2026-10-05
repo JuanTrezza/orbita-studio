@@ -1,21 +1,100 @@
 import React, { useRef } from 'react';
 import { processSteps } from '../data/process';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { getLenis, gsap, MQ, prefersReducedMotion, ScrollTrigger, useGSAP } from '../lib/motion';
+import { useTitleReveal } from '../hooks/useTitleReveal';
 
 export function ProcessSection(): React.ReactElement {
+  const sectionRef = useRef<HTMLElement | null>(null);
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
+  /** Trigger del pin horizontal (solo desktop sin reduced-motion) */
+  const pinTrigger = useRef<ScrollTrigger | null>(null);
+  const titleRef = useTitleReveal<HTMLHeadingElement>();
+
+  // Desktop: la sección queda fija y los pasos se desplazan de costado con el scroll.
+  // Mobile: lista vertical. Reduced-motion: el track horizontal nativo, sin pin.
+  useGSAP(
+    () => {
+      const section = sectionRef.current;
+      const track = scrollContainerRef.current;
+      if (!section || !track) return;
+
+      const mm = gsap.matchMedia();
+      mm.add(MQ.desktop, () => {
+        // El track deja de scrollear por su cuenta: lo mueve el scroll de la página
+        gsap.set(section, { overflow: 'clip' });
+        gsap.set(track, { overflow: 'visible', scrollSnapType: 'none' });
+        // Cards más anchas solo en modo pin, para que siempre haya recorrido horizontal
+        // (con 320–340px, desde ~1440px los 4 pasos entran y casi no se desplazan)
+        gsap.set(track.children, { width: 'max(340px, 40vw)', maxWidth: 'none' });
+
+        const distance = () => Math.max(0, track.scrollWidth - track.clientWidth);
+        const HEADER = 64;
+
+        const tween = gsap.to(track, {
+          x: () => -distance(),
+          ease: 'none',
+          scrollTrigger: {
+            trigger: section,
+            // Si entra debajo del header, se fija arriba; si es más alta que el viewport, por abajo
+            start: () =>
+              section.offsetHeight <= window.innerHeight - HEADER ? `top top+=${HEADER}` : 'bottom bottom',
+            end: () => `+=${distance()}`,
+            pin: true,
+            // Explícito: el padre (la Home) es flex, y ahí ScrollTrigger lo apaga por defecto
+            pinSpacing: true,
+            scrub: true,
+            invalidateOnRefresh: true,
+          },
+        });
+        pinTrigger.current = tween.scrollTrigger ?? null;
+
+        return () => {
+          pinTrigger.current = null;
+        };
+      });
+    },
+    { scope: sectionRef }
+  );
 
   const handleScroll = (direction: 'left' | 'right'): void => {
-    if (!scrollContainerRef.current) return;
+    const track = scrollContainerRef.current;
+    if (!track) return;
+
+    const st = pinTrigger.current;
+    const lenis = getLenis();
+    if (st && lenis) {
+      // Con el pin, las flechas llevan el scroll de la página al paso anterior / siguiente
+      const cards = Array.from(track.children) as HTMLElement[];
+      const distance = st.end - st.start;
+      const maxX = track.scrollWidth - track.clientWidth;
+      if (!cards.length || distance <= 0 || maxX <= 0) return;
+
+      const stops = cards.map((card) => Math.min(1, (card.offsetLeft - cards[0].offsetLeft) / maxX));
+      const current = st.progress;
+      const EPS = 0.01;
+      const target =
+        direction === 'right'
+          ? stops.find((p) => p > current + EPS) ?? 1
+          : [...stops].reverse().find((p) => p < current - EPS) ?? 0;
+
+      const targetY = st.start + target * distance;
+      // Pasado el final (o antes del inicio) del pin, una flecha nunca lleva el scroll al revés
+      if (direction === 'right' ? targetY <= lenis.scroll + 1 : targetY >= lenis.scroll - 1) return;
+
+      lenis.scrollTo(targetY, { duration: 1 });
+      return;
+    }
+
     const scrollAmount = 340;
-    scrollContainerRef.current.scrollBy({
+    track.scrollBy({
       left: direction === 'left' ? -scrollAmount : scrollAmount,
-      behavior: 'smooth',
+      behavior: prefersReducedMotion() ? 'auto' : 'smooth',
     });
   };
 
   return (
-    <section id="proceso" className="w-full bg-[#151713] px-4 sm:px-6 md:px-8 py-16 sm:py-24 border-t border-[#5C5E57]/30">
+    <section ref={sectionRef} id="proceso" className="w-full bg-[#151713] px-4 sm:px-6 md:px-8 py-16 sm:py-24 border-t border-[#5C5E57]/30">
       <div className="w-full flex flex-col gap-12">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
@@ -24,7 +103,7 @@ export function ProcessSection(): React.ReactElement {
               <span className="w-1.5 h-1.5 bg-[#C6FF3D]"></span>
               <span>02 / METODOLOGÍA &amp; PROCESO</span>
             </div>
-            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl uppercase tracking-tight text-[#EDEDE6] font-bold">
+            <h2 ref={titleRef} className="font-display text-3xl sm:text-4xl md:text-5xl uppercase tracking-tight text-[#EDEDE6] font-bold">
               ARQUITECTURA DE PRODUCCIÓN
             </h2>
           </div>

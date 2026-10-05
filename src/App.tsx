@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { HashRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route, useParams } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { PageTransition } from './components/PageTransition';
@@ -48,7 +48,7 @@ export default function App(): React.ReactElement {
                   <Route
                     path="/caso/:id"
                     element={
-                      <CasoEstudio
+                      <CasoEstudioRoute
                         onOpenContact={() => setContactOpen(true)}
                         onOpenReel={() => setReelOpen(true)}
                       />
@@ -69,4 +69,13 @@ export default function App(): React.ReactElement {
       </HashRouter>
     </ErrorBoundary>
   );
+}
+
+/**
+ * Remonta el caso de estudio al pasar de un caso a otro: así sus animaciones
+ * (títulos partidos con SplitText) arrancan de cero en vez de quedar sobre el caso anterior.
+ */
+function CasoEstudioRoute(props: React.ComponentProps<typeof CasoEstudio>): React.ReactElement {
+  const { id } = useParams<{ id: string }>();
+  return <CasoEstudio key={id} {...props} />;
 }

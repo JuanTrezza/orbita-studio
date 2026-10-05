@@ -6,6 +6,8 @@ import { teamMembers } from '../data/team';
 import { ProcessSection } from '../components/ProcessSection';
 import { ClientsMarquee } from '../components/ClientsMarquee';
 import { usePageTitle } from '../hooks/usePageTitle';
+import { useTitleReveal } from '../hooks/useTitleReveal';
+import { useStaggerReveal } from '../hooks/useStaggerReveal';
 
 interface HomeProps {
   onOpenReel: () => void;
@@ -14,6 +16,13 @@ interface HomeProps {
 
 export function Home({ onOpenReel, onOpenContact }: HomeProps): React.ReactElement {
   usePageTitle('Inicio');
+  
+  const heroTitleRef = useTitleReveal<HTMLHeadingElement>();
+  const manifestoTitleRef = useTitleReveal<HTMLHeadingElement>();
+  const recentTitleRef = useTitleReveal<HTMLHeadingElement>();
+  const teamTitleRef = useTitleReveal<HTMLHeadingElement>();
+  const ctaTitleRef = useTitleReveal<HTMLHeadingElement>();
+  const recentGridRef = useStaggerReveal<HTMLDivElement>();
 
   // First 6 featured projects
   const recentProjects = projects.slice(0, 6);
@@ -65,7 +74,7 @@ export function Home({ onOpenReel, onOpenContact }: HomeProps): React.ReactEleme
             <span>LABORATORIO DE MOVIMIENTO GENERATIVO</span>
           </div>
 
-          <h1 className="font-display text-6xl sm:text-8xl md:text-[120px] lg:text-[140px] font-black uppercase tracking-tighter text-[#EDEDE6] select-none leading-none">
+          <h1 ref={heroTitleRef} className="font-display text-6xl sm:text-8xl md:text-[120px] lg:text-[140px] font-black uppercase tracking-tighter text-[#EDEDE6] select-none leading-none">
             ÓRBITA
           </h1>
 
@@ -147,7 +156,7 @@ export function Home({ onOpenReel, onOpenContact }: HomeProps): React.ReactEleme
           {/* Main Typographic Blast */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             <div className="lg:col-span-8">
-              <h2 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl uppercase tracking-tighter text-[#EDEDE6] font-extrabold leading-none">
+              <h2 ref={manifestoTitleRef} className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl uppercase tracking-tighter text-[#EDEDE6] font-extrabold leading-none">
                 Diseñamos movimiento para marcas que quieren ser recordadas.
               </h2>
             </div>
@@ -213,7 +222,7 @@ export function Home({ onOpenReel, onOpenContact }: HomeProps): React.ReactEleme
                 <span className="w-1.5 h-1.5 bg-[#C6FF3D]"></span>
                 <span>01 / PROYECTOS SELECCIONADOS</span>
               </div>
-              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl uppercase tracking-tight text-[#EDEDE6] font-bold">
+              <h2 ref={recentTitleRef} className="font-display text-3xl sm:text-4xl md:text-5xl uppercase tracking-tight text-[#EDEDE6] font-bold">
                 TRABAJOS RECIENTES
               </h2>
             </div>
@@ -227,7 +236,7 @@ export function Home({ onOpenReel, onOpenContact }: HomeProps): React.ReactEleme
           </div>
 
           {/* Asymmetric Grid of 6 Cards Matching Design */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div ref={recentGridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* CARD 1: Span 2 Columns */}
             <article className="md:col-span-2 bg-[#151713] border border-[#5C5E57]/40 flex flex-col group overflow-hidden hover:border-[#C6FF3D]/70 transition-colors">
               <Link to={`/caso/${recentProjects[0].id}`} className="block relative w-full aspect-[16/9] md:aspect-[21/9] bg-[#191B16] overflow-hidden">
@@ -497,7 +506,7 @@ export function Home({ onOpenReel, onOpenContact }: HomeProps): React.ReactEleme
                 <span className="w-1.5 h-1.5 bg-[#C6FF3D]"></span>
                 <span>04 / EQUIPO PRINCIPAL</span>
               </div>
-              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl uppercase tracking-tight text-[#EDEDE6] font-bold">
+              <h2 ref={teamTitleRef} className="font-display text-3xl sm:text-4xl md:text-5xl uppercase tracking-tight text-[#EDEDE6] font-bold">
                 DIRECCIÓN &amp; INGENIERÍA
               </h2>
             </div>
@@ -567,7 +576,7 @@ export function Home({ onOpenReel, onOpenContact }: HomeProps): React.ReactEleme
 
           {/* Center Huge Headline */}
           <div className="space-y-4 max-w-5xl">
-            <h2 className="font-display text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black uppercase tracking-tighter leading-none text-[#0E0F0C]">
+            <h2 ref={ctaTitleRef} className="font-display text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black uppercase tracking-tighter leading-none text-[#0E0F0C]">
               ¿HACEMOS ALGO QUE SE MUEVA?
             </h2>
             <p className="text-base sm:text-xl md:text-2xl text-[#141F00] font-medium max-w-3xl leading-relaxed">

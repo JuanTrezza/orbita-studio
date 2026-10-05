@@ -3,6 +3,7 @@ import { ArrowRight, Cpu, Volume2, Box } from 'lucide-react';
 import { teamMembers } from '../data/team';
 import { awards } from '../data/awards';
 import { usePageTitle } from '../hooks/usePageTitle';
+import { useTitleReveal } from '../hooks/useTitleReveal';
 
 interface EstudioProps {
   onOpenContact: () => void;
@@ -10,6 +11,13 @@ interface EstudioProps {
 
 export function Estudio({ onOpenContact }: EstudioProps): React.ReactElement {
   usePageTitle('Estudio');
+
+  const heroTitleRef = useTitleReveal<HTMLHeadingElement>();
+  const principlesTitleRef = useTitleReveal<HTMLHeadingElement>();
+  const teamTitleRef = useTitleReveal<HTMLHeadingElement>();
+  const awardsTitleRef = useTitleReveal<HTMLHeadingElement>();
+  const specsTitleRef = useTitleReveal<HTMLHeadingElement>();
+  const ctaTitleRef = useTitleReveal<HTMLHeadingElement>();
 
   const [bueTime, setBueTime] = useState('14:48:22');
   const [timecode, setTimecode] = useState('00:14:48:19');
@@ -88,7 +96,7 @@ export function Estudio({ onOpenContact }: EstudioProps): React.ReactElement {
               [ EL ESTUDIO // MANIFIESTO &amp; VISIÓN COMPUTACIONAL ]
             </div>
 
-            <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-[#EDEDE6] uppercase tracking-tighter leading-none">
+            <h1 ref={heroTitleRef} className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-[#EDEDE6] uppercase tracking-tighter leading-none">
               CREEMOS EN EL MOVIMIENTO COMO ARQUITECTURA EMOCIONAL.
             </h1>
 
@@ -115,7 +123,7 @@ export function Estudio({ onOpenContact }: EstudioProps): React.ReactElement {
         <div className="flex flex-col sm:flex-row items-baseline justify-between mb-10 pb-4 border-b border-[#5C5E57]/30">
           <div className="flex items-center gap-3">
             <span className="font-mono text-xs text-[#C6FF3D] font-bold">02 //</span>
-            <h2 className="font-display text-3xl sm:text-4xl text-[#EDEDE6] tracking-tight uppercase font-bold">
+            <h2 ref={principlesTitleRef} className="font-display text-3xl sm:text-4xl text-[#EDEDE6] tracking-tight uppercase font-bold">
               PRINCIPIOS DE TRABAJO
             </h2>
           </div>
@@ -220,7 +228,7 @@ export function Estudio({ onOpenContact }: EstudioProps): React.ReactElement {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 pb-4 border-b border-[#5C5E57]/30">
           <div className="space-y-2">
             <span className="font-mono text-xs text-[#C6FF3D] font-bold uppercase">03 // EQUIPO CENTRAL</span>
-            <h2 className="font-display text-3xl sm:text-4xl text-[#EDEDE6] uppercase tracking-tight font-bold">
+            <h2 ref={teamTitleRef} className="font-display text-3xl sm:text-4xl text-[#EDEDE6] uppercase tracking-tight font-bold">
               DIRECCIÓN &amp; ARTISTAS
             </h2>
           </div>
@@ -289,7 +297,7 @@ export function Estudio({ onOpenContact }: EstudioProps): React.ReactElement {
         <div className="flex flex-col md:flex-row md:items-baseline justify-between mb-8 pb-4 border-b border-[#5C5E57]/30">
           <div className="space-y-2">
             <span className="font-mono text-xs text-[#C6FF3D] font-bold uppercase">04 // PALMARÉS &amp; REGISTRO</span>
-            <h2 className="font-display text-3xl sm:text-4xl text-[#EDEDE6] uppercase tracking-tight font-bold">
+            <h2 ref={awardsTitleRef} className="font-display text-3xl sm:text-4xl text-[#EDEDE6] uppercase tracking-tight font-bold">
               PREMIOS &amp; FESTIVALES
             </h2>
           </div>
@@ -338,7 +346,7 @@ export function Estudio({ onOpenContact }: EstudioProps): React.ReactElement {
         <div className="flex flex-col md:flex-row md:items-baseline justify-between mb-10 pb-4 border-b border-[#5C5E57]/30">
           <div className="space-y-2">
             <span className="font-mono text-xs text-[#C6FF3D] font-bold uppercase">05 // CAPACIDAD TÉCNICA</span>
-            <h2 className="font-display text-3xl sm:text-4xl text-[#EDEDE6] uppercase tracking-tight font-bold">
+            <h2 ref={specsTitleRef} className="font-display text-3xl sm:text-4xl text-[#EDEDE6] uppercase tracking-tight font-bold">
               INFRAESTRUCTURA &amp; SPECS
             </h2>
           </div>
@@ -439,7 +447,7 @@ export function Estudio({ onOpenContact }: EstudioProps): React.ReactElement {
               <span className="w-1.5 h-1.5 bg-[#C6FF3D]"></span>
               <span>DISPONIBILIDAD CONFIRMADA // Q2 &amp; Q3 2025</span>
             </div>
-            <h2 className="font-display text-2xl sm:text-4xl text-[#EDEDE6] uppercase tracking-tighter font-bold">
+            <h2 ref={ctaTitleRef} className="font-display text-2xl sm:text-4xl text-[#EDEDE6] uppercase tracking-tighter font-bold">
               ¿TIENES UN PROYECTO QUE DESAFÍA LA GRAVEDAD CONVENCIONAL?
             </h2>
             <p className="text-base text-[#A6A99E] max-w-2xl leading-relaxed">

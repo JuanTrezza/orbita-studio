@@ -1,6 +1,6 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useLocation, type Location } from 'react-router-dom';
-import { getLenis, gsap, lockScroll, prefersReducedMotion, ScrollTrigger } from '../lib/motion';
+import { getLenis, gsap, lockScroll, prefersReducedMotion, ScrollTrigger, setPageCovered } from '../lib/motion';
 import { scrollToId } from '../lib/scroll';
 
 interface PageTransitionProps {
@@ -47,6 +47,7 @@ export function PageTransition({ children }: PageTransitionProps): React.ReactEl
 
     return () => {
       tween.current?.kill();
+      setPageCovered(false);
       releaseLock.current?.();
       releaseLock.current = null;
     };
@@ -74,6 +75,7 @@ export function PageTransition({ children }: PageTransitionProps): React.ReactEl
     tween.current?.kill();
     releaseLock.current ??= lockScroll();
     phase.current = 'covering';
+    setPageCovered(true);
 
     // Desde abajo si estaba quieta; si venía saliendo por arriba, vuelve desde donde quedó
     tween.current = gsap.to(curtainRef.current, {
@@ -117,7 +119,12 @@ export function PageTransition({ children }: PageTransitionProps): React.ReactEl
       duration: 0.65,
       delay: 0.1,
       ease: 'power3.inOut',
+      onUpdate() {
+        // Los reveals de entrada arrancan con la cortina a medio abrir, no cuando ya terminó
+        if (this.progress() >= 0.4) setPageCovered(false);
+      },
       onComplete: () => {
+        setPageCovered(false);
         gsap.set(curtainRef.current, { yPercent: 100, autoAlpha: 0 });
         phase.current = 'idle';
         releaseLock.current?.();

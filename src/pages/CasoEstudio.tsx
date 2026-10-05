@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Play, Pause, Volume2, VolumeX, Maximize, ArrowRight, AlertCircle, LayoutGrid } from 'lucide-react';
 import { projects } from '../data/projects';
 import { usePageTitle } from '../hooks/usePageTitle';
+import { useTitleReveal } from '../hooks/useTitleReveal';
 
 interface CasoEstudioProps {
   onOpenContact: () => void;
@@ -18,6 +19,11 @@ export function CasoEstudio({ onOpenContact, onOpenReel }: CasoEstudioProps): Re
   const projectIndex = projects.findIndex((p) => p.id === id);
 
   usePageTitle(projectIndex !== -1 ? 'Caso de Estudio' : 'Proyecto no encontrado');
+
+  // El título de "no encontrado" tiene gradiente con bg-clip-text: no se parte en palabras
+  const titleRef = useTitleReveal<HTMLHeadingElement>();
+  const challengeTitleRef = useTitleReveal<HTMLHeadingElement>();
+  const solutionTitleRef = useTitleReveal<HTMLHeadingElement>();
 
   // Handle invalid project ID
   if (projectIndex === -1) {
@@ -130,7 +136,7 @@ export function CasoEstudio({ onOpenContact, onOpenReel }: CasoEstudioProps): Re
               {currentProject.disciplines.join(' / ')}
             </span>
           </div>
-          <h1 className="font-display text-4xl sm:text-6xl md:text-7xl lg:text-[8vw] lg:leading-[0.88] text-[#EDEDE6] tracking-tighter uppercase font-black break-words">
+          <h1 ref={titleRef} className="font-display text-4xl sm:text-6xl md:text-7xl lg:text-[8vw] lg:leading-[0.88] text-[#EDEDE6] tracking-tighter uppercase font-black break-words">
             {currentProject.title}
           </h1>
         </div>
@@ -261,7 +267,7 @@ export function CasoEstudio({ onOpenContact, onOpenReel }: CasoEstudioProps): Re
               <span className="font-mono text-[10px] text-[#5C5E57] uppercase tracking-widest block mb-2">
                 EL DESAFÍO // THE CHALLENGE
               </span>
-              <h2 className="font-display text-2xl md:text-3xl text-[#EDEDE6] tracking-tight mb-4 uppercase font-bold">
+              <h2 ref={challengeTitleRef} className="font-display text-2xl md:text-3xl text-[#EDEDE6] tracking-tight mb-4 uppercase font-bold">
                 {currentProject.challengeTitle || 'Traducción visual de biología sintética imperceptible'}
               </h2>
               {currentProject.challengeDesc?.map((para, i) => (
@@ -284,7 +290,7 @@ export function CasoEstudio({ onOpenContact, onOpenReel }: CasoEstudioProps): Re
               <span className="font-mono text-[10px] text-[#5C5E57] uppercase tracking-widest block mb-2">
                 LA SOLUCIÓN TÉCNICA // ARCHITECTURE
               </span>
-              <h2 className="font-display text-2xl md:text-3xl text-[#EDEDE6] tracking-tight mb-4 uppercase font-bold">
+              <h2 ref={solutionTitleRef} className="font-display text-2xl md:text-3xl text-[#EDEDE6] tracking-tight mb-4 uppercase font-bold">
                 {currentProject.solutionTitle || 'Simulación multifásica y shaders micro-celulares'}
               </h2>
               {currentProject.solutionDesc?.map((para, i) => (

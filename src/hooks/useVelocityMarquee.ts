@@ -8,6 +8,8 @@ interface VelocityMarqueeOptions {
   shift: number;
   /** Frena el marquee suavemente mientras tiene el mouse encima */
   pauseOnHover?: boolean;
+  /** Recorre de `shift` a 0 en vez de 0 a `shift` (fila que corre hacia el otro lado) */
+  reverse?: boolean;
 }
 
 /**
@@ -18,6 +20,7 @@ export function useVelocityMarquee<T extends HTMLElement>({
   duration,
   shift,
   pauseOnHover = false,
+  reverse = false,
 }: VelocityMarqueeOptions) {
   const ref = useRef<T>(null);
 
@@ -35,9 +38,9 @@ export function useVelocityMarquee<T extends HTMLElement>({
 
         const loop = gsap.fromTo(
           tracks,
-          { xPercent: 0 },
+          { xPercent: reverse ? shift : 0 },
           {
-            xPercent: shift,
+            xPercent: reverse ? 0 : shift,
             duration,
             ease: 'none',
             repeat: -1,

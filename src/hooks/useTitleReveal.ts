@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { gsap, MQ, SplitText, useGSAP } from '../lib/motion';
+import { afterPageReveal, gsap, MQ, SplitText, useGSAP } from '../lib/motion';
 
 /**
  * Reveal enmascarado palabra por palabra para títulos de sección al entrar en el viewport.
@@ -11,40 +11,43 @@ import { gsap, MQ, SplitText, useGSAP } from '../lib/motion';
  * Si el título ya se reveló, el nuevo aparece directamente, sin volver a animar.
  * (Se marca al completar: si fuentes o resize re-parten a mitad del reveal, SplitText
  * sincroniza la animación nueva con el progreso de la anterior.)
+ * Después de un cambio de página, el split y el reveal se crean recién cuando abre la cortina.
  */
 export function useTitleReveal<T extends HTMLElement>(splitKey?: unknown) {
   const ref = useRef<T>(null);
   const revealed = useRef(false);
 
   useGSAP(
-    () => {
+    (_context, contextSafe) => {
       const el = ref.current;
       if (!el) return;
 
-      const mm = gsap.matchMedia();
-      mm.add({ desktop: MQ.desktop, mobile: MQ.mobile }, (ctx) => {
-        const { desktop } = ctx.conditions as { desktop: boolean };
+      return afterPageReveal(contextSafe!(() => {
+        const mm = gsap.matchMedia();
+        mm.add({ desktop: MQ.desktop, mobile: MQ.mobile }, (ctx) => {
+          const { desktop } = ctx.conditions as { desktop: boolean };
 
-        SplitText.create(el, {
-          type: 'words',
-          mask: 'words',
-          wordsClass: 'reveal-word',
-          autoSplit: true,
-          onSplit: (self) => {
-            if (revealed.current) return;
-            return gsap.from(self.words, {
-              yPercent: 120,
-              duration: desktop ? 1.1 : 0.8,
-              stagger: desktop ? 0.08 : 0.05,
-              ease: 'expo.out',
-              scrollTrigger: { trigger: el, start: 'top 88%', once: true },
-              onComplete: () => {
-                revealed.current = true;
-              },
-            });
-          },
+          SplitText.create(el, {
+            type: 'words',
+            mask: 'words',
+            wordsClass: 'reveal-word',
+            autoSplit: true,
+            onSplit: (self) => {
+              if (revealed.current) return;
+              return gsap.from(self.words, {
+                yPercent: 120,
+                duration: desktop ? 1.1 : 0.8,
+                stagger: desktop ? 0.08 : 0.05,
+                ease: 'expo.out',
+                scrollTrigger: { trigger: el, start: 'top 88%', once: true },
+                onComplete: () => {
+                  revealed.current = true;
+                },
+              });
+            },
+          });
         });
-      });
+      }));
     },
     { scope: ref, dependencies: [splitKey], revertOnUpdate: true }
   );

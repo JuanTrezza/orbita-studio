@@ -113,3 +113,31 @@ export function lockScroll() {
     if (lockCount === 0) lenis?.start();
   };
 }
+
+let pageCovered = false;
+const revealQueue = new Set<() => void>();
+
+/** Lo marca la transición entre páginas: true mientras la cortina tapa la página. */
+export function setPageCovered(covered: boolean) {
+  pageCovered = covered;
+  if (covered) return;
+  const pending = [...revealQueue];
+  revealQueue.clear();
+  pending.forEach((cb) => cb());
+}
+
+/**
+ * Corre `cb` cuando la página está a la vista: ya mismo, o cuando la cortina de la
+ * transición empieza a abrirse. Así los reveals de entrada no se animan tapados.
+ * Devuelve una función que cancela la espera (para la limpieza de useGSAP).
+ */
+export function afterPageReveal(cb: () => void) {
+  if (!pageCovered) {
+    cb();
+    return () => {};
+  }
+  revealQueue.add(cb);
+  return () => {
+    revealQueue.delete(cb);
+  };
+}

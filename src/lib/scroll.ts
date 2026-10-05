@@ -39,7 +39,19 @@ export function scrollToId(id: string, { immediate = false }: ScrollToIdOptions 
   }
 
   const handled = withLenis((l) =>
-    l.scrollTo(targetElement, { offset: -HEADER_OFFSET, duration: 1.4, easing: easeOutQuart })
+    l.scrollTo(targetElement, {
+      offset: -HEADER_OFFSET,
+      duration: 1.4,
+      easing: easeOutQuart,
+      // Lenis calcula el destino al empezar: si en el camino cargan imágenes lazy de más
+      // arriba y empujan la sección, corrige con un tramo corto al terminar
+      onComplete: () => {
+        const drift = targetElement.getBoundingClientRect().top - HEADER_OFFSET;
+        if (Math.abs(drift) > 2 && l.scroll < l.limit) {
+          l.scrollTo(targetElement, { offset: -HEADER_OFFSET, duration: 0.6, easing: easeOutQuart });
+        }
+      },
+    })
   );
   if (handled) return;
 

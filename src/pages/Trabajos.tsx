@@ -4,6 +4,8 @@ import { LayoutGrid, List, ArrowRight } from 'lucide-react';
 import { projects } from '../data/projects';
 import { ProjectCategory } from '../data/types';
 import { usePageTitle } from '../hooks/usePageTitle';
+import { useTitleReveal } from '../hooks/useTitleReveal';
+import { useStaggerReveal } from '../hooks/useStaggerReveal';
 
 interface TrabajosProps {
   onOpenContact: () => void;
@@ -15,6 +17,10 @@ export function Trabajos({ onOpenContact }: TrabajosProps): React.ReactElement {
   const [filter, setFilter] = useState<ProjectCategory>('all');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [sortOrder, setSortOrder] = useState<'chrono' | 'alpha'>('chrono');
+  
+  const titleRef = useTitleReveal<HTMLHeadingElement>();
+  // La entrada escalonada se repite al filtrar, ordenar o cambiar de vista
+  const galleryRef = useStaggerReveal<HTMLElement>(':scope > div > *', [filter, sortOrder, viewMode]);
 
   // Filtered projects
   const filteredProjects = useMemo(() => {
@@ -57,7 +63,7 @@ export function Trabajos({ onOpenContact }: TrabajosProps): React.ReactElement {
               <span className="text-[#5C5E57]">/</span>
               <span className="text-[#C6FF3D]">REPOSITORIO DE OBRA</span>
             </div>
-            <h1 className="font-display text-4xl sm:text-6xl md:text-7xl font-black tracking-tighter uppercase text-[#EDEDE6]">
+            <h1 ref={titleRef} className="font-display text-4xl sm:text-6xl md:text-7xl font-black tracking-tighter uppercase text-[#EDEDE6]">
               TRABAJOS SELECCIONADOS
             </h1>
           </div>
@@ -140,7 +146,7 @@ export function Trabajos({ onOpenContact }: TrabajosProps): React.ReactElement {
       </section>
 
       {/* Visual Project Gallery */}
-      <section className="w-full px-4 sm:px-6 md:px-8 py-6">
+      <section ref={galleryRef} className="w-full px-4 sm:px-6 md:px-8 py-6">
         {viewMode === 'grid' ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6">
             {filteredProjects.map((project, index) => {

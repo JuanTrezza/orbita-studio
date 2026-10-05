@@ -18,7 +18,12 @@ function withLenis(run: (lenis: NonNullable<ReturnType<typeof getLenis>>) => voi
   return true;
 }
 
-export function scrollToId(id: string): void {
+interface ScrollToIdOptions {
+  /** Salta sin animación, aunque Lenis esté detenido (lo usa la transición entre páginas debajo de la cortina). */
+  immediate?: boolean;
+}
+
+export function scrollToId(id: string, { immediate = false }: ScrollToIdOptions = {}): void {
   // Limpiar el selector en caso de recibir '#'
   const cleanId = id.replace(/^#/, '');
   const targetElement = document.getElementById(cleanId);
@@ -27,8 +32,14 @@ export function scrollToId(id: string): void {
     return;
   }
 
-  const handled = withLenis((lenis) =>
-    lenis.scrollTo(targetElement, { offset: -HEADER_OFFSET, duration: 1.4, easing: easeOutQuart })
+  const lenis = getLenis();
+  if (lenis && immediate) {
+    lenis.scrollTo(targetElement, { offset: -HEADER_OFFSET, immediate: true, force: true });
+    return;
+  }
+
+  const handled = withLenis((l) =>
+    l.scrollTo(targetElement, { offset: -HEADER_OFFSET, duration: 1.4, easing: easeOutQuart })
   );
   if (handled) return;
 
@@ -38,7 +49,7 @@ export function scrollToId(id: string): void {
 
   window.scrollTo({
     top: Math.max(0, offsetPosition),
-    behavior: prefersReducedMotion() ? 'auto' : 'smooth',
+    behavior: immediate || prefersReducedMotion() ? 'auto' : 'smooth',
   });
 }
 

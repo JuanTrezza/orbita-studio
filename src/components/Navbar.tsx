@@ -25,8 +25,8 @@ export function Navbar({ onOpenContact }: NavbarProps): React.ReactElement {
     if (location.pathname === '/') {
       scrollToId('proceso');
     } else {
+      // PageTransition baja a #proceso cuando la Home ya está montada
       navigate('/#proceso');
-      setTimeout(() => scrollToId('proceso'), 150);
     }
   };
 

@@ -4,6 +4,7 @@ import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { ScrollToTop } from './components/ScrollToTop';
 import { ErrorBoundary } from './components/ErrorBoundary';
+import { useSmoothScroll } from './hooks/useSmoothScroll';
 import { ContactModal } from './components/ContactModal';
 import { ReelModal } from './components/ReelModal';
 import { Home } from './pages/Home';
@@ -15,6 +16,7 @@ import { NotFound } from './pages/NotFound';
 export default function App(): React.ReactElement {
   const [contactOpen, setContactOpen] = useState(false);
   const [reelOpen, setReelOpen] = useState(false);
+  useSmoothScroll();
 
   return (
     <ErrorBoundary>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { X, Play, Pause, Volume2, VolumeX, Maximize } from 'lucide-react';
+import { useLenisLock } from '../hooks/useLenisLock';
 
 interface ReelModalProps {
   isOpen: boolean;
@@ -11,6 +12,7 @@ export function ReelModal({ isOpen, onClose }: ReelModalProps): React.ReactEleme
   const [isMuted, setIsMuted] = useState(true);
   const [progress, setProgress] = useState(24);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  useLenisLock(isOpen);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent): void => {

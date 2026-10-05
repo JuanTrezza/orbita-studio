@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowUp } from 'lucide-react';
+import { scrollToTop } from '../lib/scroll';
 
 interface FooterProps {
   onOpenContact: () => void;
@@ -27,7 +28,7 @@ export function Footer({ onOpenContact }: FooterProps): React.ReactElement {
 
   const handleScrollTop = (e: React.MouseEvent): void => {
     e.preventDefault();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    scrollToTop();
   };
 
   return (
@@ -177,7 +178,7 @@ export function Footer({ onOpenContact }: FooterProps): React.ReactElement {
             href="#colofon"
             onClick={(e) => {
               e.preventDefault();
-              window.scrollTo({ top: 0, behavior: 'smooth' });
+              scrollToTop();
             }}
             className="hover:text-[#EDEDE6] transition-colors"
           >

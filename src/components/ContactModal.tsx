@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { X, CheckCircle, Send, AlertCircle } from 'lucide-react';
+import { useLenisLock } from '../hooks/useLenisLock';
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -23,6 +24,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps): React.Reac
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  useLenisLock(isOpen);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent): void => {
@@ -113,7 +115,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps): React.Reac
         </div>
 
         {/* Content */}
-        <div className="p-6 md:p-8 max-h-[85vh] overflow-y-auto">
+        <div data-lenis-prevent className="p-6 md:p-8 max-h-[85vh] overflow-y-auto">
           {submitted ? (
             <div className="py-12 flex flex-col items-center justify-center text-center space-y-4">
               <div className="w-16 h-16 bg-[#C6FF3D]/10 border border-[#C6FF3D] text-[#C6FF3D] flex items-center justify-center">

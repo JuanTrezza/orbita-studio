@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, User } from 'lucide-react';
-import { scrollToId } from '../lib/scroll';
+import { scrollToId, scrollToTop } from '../lib/scroll';
+import { useLenisLock } from '../hooks/useLenisLock';
 
 interface NavbarProps {
   onOpenContact: () => void;
@@ -11,6 +12,7 @@ export function Navbar({ onOpenContact }: NavbarProps): React.ReactElement {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  useLenisLock(mobileMenuOpen);
 
   const isTrabajosActive = location.pathname.startsWith('/trabajos') || location.pathname.startsWith('/caso');
   const isEstudioActive = location.pathname.startsWith('/estudio');
@@ -45,7 +47,7 @@ export function Navbar({ onOpenContact }: NavbarProps): React.ReactElement {
               className="flex items-center gap-3 group"
               onClick={() => {
                 if (location.pathname === '/') {
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                  scrollToTop();
                 }
               }}
             >
@@ -141,6 +143,7 @@ export function Navbar({ onOpenContact }: NavbarProps): React.ReactElement {
         <div
           role="dialog"
           aria-modal="true"
+          data-lenis-prevent
           className="fixed inset-0 z-50 bg-[#0E0F0C] text-[#EDEDE6] flex flex-col justify-between p-6 animate-in fade-in duration-200"
         >
           {/* Mobile Header */}

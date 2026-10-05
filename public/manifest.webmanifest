@@ -1,0 +1,41 @@
+{
+  "name": "ÓRBITA STUDIO — Motion Design & Creative Technology",
+  "short_name": "ÓRBITA",
+  "description": "Estudio de animación experimental, simulación procedural 3D y tecnología creativa con base en Buenos Aires.",
+  "start_url": "/orbita-studio/",
+  "scope": "/orbita-studio/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0E0F0C",
+  "theme_color": "#0E0F0C",
+  "icons": [
+    {
+      "src": "/orbita-studio/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/orbita-studio/favicon.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/orbita-studio/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/orbita-studio/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/orbita-studio/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

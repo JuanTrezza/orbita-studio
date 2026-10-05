@@ -1,0 +1,6 @@
+{
+  "name": "ÓRBITA STUDIO — Motion Design & Creative Technology",
+  "description": "Estudio de animación experimental, simulación procedural 3D y tecnología creativa con base en Buenos Aires.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

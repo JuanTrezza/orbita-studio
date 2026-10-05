@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <!-- Dark Studio Background -->
+  <rect width="512" height="512" rx="120" fill="#0E0F0C"/>
+  <rect width="512" height="512" rx="120" stroke="#33372B" stroke-width="6"/>
+  
+  <!-- Dynamic Orbit Ring -->
+  <g transform="rotate(-28 256 256)">
+    <!-- Orbit Path -->
+    <ellipse cx="256" cy="256" rx="200" ry="86" stroke="#5C5E57" stroke-opacity="0.4" stroke-width="8" fill="none"/>
+    <!-- Glowing Lime Arc -->
+    <ellipse cx="256" cy="256" rx="200" ry="86" stroke="#C6FF3D" stroke-width="14" stroke-dasharray="320 900" stroke-linecap="round" fill="none"/>
+    <!-- Satellite Bead -->
+    <circle cx="456" cy="256" r="24" fill="#C6FF3D"/>
+    <circle cx="456" cy="256" r="38" fill="#C6FF3D" fill-opacity="0.25"/>
+  </g>
+
+  <!-- Central Planet / Stylized Ó Core -->
+  <circle cx="256" cy="256" r="82" fill="#0E0F0C" stroke="#EDEDE6" stroke-width="20"/>
+  <circle cx="256" cy="256" r="28" fill="#C6FF3D"/>
+  
+  <!-- Accent Mark (Ó) -->
+  <line x1="284" y1="130" x2="324" y2="80" stroke="#C6FF3D" stroke-width="16" stroke-linecap="round"/>
+</svg>

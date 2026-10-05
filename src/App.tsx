@@ -3,6 +3,7 @@ import { HashRouter, Routes, Route, useParams } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { PageTransition } from './components/PageTransition';
+import { Cursor } from './components/Cursor';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { useSmoothScroll } from './hooks/useSmoothScroll';
 import { ContactModal } from './components/ContactModal';
@@ -65,6 +66,8 @@ export default function App(): React.ReactElement {
           {/* Global Modals */}
           <ContactModal isOpen={contactOpen} onClose={() => setContactOpen(false)} />
           <ReelModal isOpen={reelOpen} onClose={() => setReelOpen(false)} />
+
+          <Cursor />
         </div>
       </HashRouter>
     </ErrorBoundary>

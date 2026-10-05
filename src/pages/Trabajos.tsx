@@ -176,6 +176,7 @@ export function Trabajos({ onOpenContact }: TrabajosProps): React.ReactElement {
                   {/* Image Container with link */}
                   <Link
                     to={`/caso/${project.id}`}
+                    data-cursor="video"
                     className="relative w-full aspect-[16/10] overflow-hidden bg-[#0E0F0C] block"
                   >
                     <img

@@ -110,6 +110,7 @@ export function Home({ onOpenReel, onOpenContact }: HomeProps): React.ReactEleme
           <button
             type="button"
             onClick={onOpenReel}
+            data-cursor="video"
             className="self-start md:self-end group relative cursor-pointer focus:outline-none"
             aria-label="Abrir Showreel 2025"
           >
@@ -239,7 +240,7 @@ export function Home({ onOpenReel, onOpenContact }: HomeProps): React.ReactEleme
           <div ref={recentGridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* CARD 1: Span 2 Columns */}
             <article className="md:col-span-2 bg-[#151713] border border-[#5C5E57]/40 flex flex-col group overflow-hidden hover:border-[#C6FF3D]/70 transition-colors">
-              <Link to={`/caso/${recentProjects[0].id}`} className="block relative w-full aspect-[16/9] md:aspect-[21/9] bg-[#191B16] overflow-hidden">
+              <Link to={`/caso/${recentProjects[0].id}`} data-cursor="video" className="block relative w-full aspect-[16/9] md:aspect-[21/9] bg-[#191B16] overflow-hidden">
                 <img
                   src={recentProjects[0].heroImage}
                   alt={recentProjects[0].title}
@@ -285,7 +286,7 @@ export function Home({ onOpenReel, onOpenContact }: HomeProps): React.ReactEleme
 
             {/* CARD 2 */}
             <article className="bg-[#151713] border border-[#5C5E57]/40 flex flex-col group overflow-hidden hover:border-[#C6FF3D]/70 transition-colors">
-              <Link to={`/caso/${recentProjects[1].id}`} className="block relative w-full aspect-[4/3] bg-[#191B16] overflow-hidden">
+              <Link to={`/caso/${recentProjects[1].id}`} data-cursor="video" className="block relative w-full aspect-[4/3] bg-[#191B16] overflow-hidden">
                 <img
                   src={recentProjects[1].heroImage}
                   alt={recentProjects[1].title}
@@ -324,7 +325,7 @@ export function Home({ onOpenReel, onOpenContact }: HomeProps): React.ReactEleme
 
             {/* CARD 3 */}
             <article className="bg-[#151713] border border-[#5C5E57]/40 flex flex-col group overflow-hidden hover:border-[#C6FF3D]/70 transition-colors">
-              <Link to={`/caso/${recentProjects[2].id}`} className="block relative w-full aspect-[4/3] bg-[#191B16] overflow-hidden">
+              <Link to={`/caso/${recentProjects[2].id}`} data-cursor="video" className="block relative w-full aspect-[4/3] bg-[#191B16] overflow-hidden">
                 <img
                   src={recentProjects[2].heroImage}
                   alt={recentProjects[2].title}
@@ -363,7 +364,7 @@ export function Home({ onOpenReel, onOpenContact }: HomeProps): React.ReactEleme
 
             {/* CARD 4 */}
             <article className="bg-[#151713] border border-[#5C5E57]/40 flex flex-col group overflow-hidden hover:border-[#C6FF3D]/70 transition-colors">
-              <Link to={`/caso/${recentProjects[3].id}`} className="block relative w-full aspect-[4/3] bg-[#191B16] overflow-hidden">
+              <Link to={`/caso/${recentProjects[3].id}`} data-cursor="video" className="block relative w-full aspect-[4/3] bg-[#191B16] overflow-hidden">
                 <img
                   src={recentProjects[3].heroImage}
                   alt={recentProjects[3].title}
@@ -402,7 +403,7 @@ export function Home({ onOpenReel, onOpenContact }: HomeProps): React.ReactEleme
 
             {/* CARD 5 */}
             <article className="bg-[#151713] border border-[#5C5E57]/40 flex flex-col group overflow-hidden hover:border-[#C6FF3D]/70 transition-colors">
-              <Link to={`/caso/${recentProjects[4].id}`} className="block relative w-full aspect-[4/3] bg-[#191B16] overflow-hidden">
+              <Link to={`/caso/${recentProjects[4].id}`} data-cursor="video" className="block relative w-full aspect-[4/3] bg-[#191B16] overflow-hidden">
                 <img
                   src={recentProjects[4].heroImage}
                   alt={recentProjects[4].title}
@@ -441,7 +442,7 @@ export function Home({ onOpenReel, onOpenContact }: HomeProps): React.ReactEleme
 
             {/* CARD 6: Full Width Span in 3-col layout */}
             <article className="md:col-span-2 lg:col-span-3 bg-[#151713] border border-[#5C5E57]/40 flex flex-col lg:flex-row group overflow-hidden hover:border-[#C6FF3D]/70 transition-colors">
-              <Link to={`/caso/${recentProjects[5].id}`} className="block relative w-full lg:w-3/5 aspect-[16/9] lg:aspect-auto min-h-[300px] bg-[#191B16] overflow-hidden">
+              <Link to={`/caso/${recentProjects[5].id}`} data-cursor="video" className="block relative w-full lg:w-3/5 aspect-[16/9] lg:aspect-auto min-h-[300px] bg-[#191B16] overflow-hidden">
                 <img
                   src={recentProjects[5].heroImage}
                   alt={recentProjects[5].title}

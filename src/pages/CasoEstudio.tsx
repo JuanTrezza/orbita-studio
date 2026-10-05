@@ -162,7 +162,7 @@ export function CasoEstudio({ onOpenContact, onOpenReel }: CasoEstudioProps): Re
 
       {/* 2. HERO VIDEO & MEDIA SHOWCASE (Cinematic Player Unit) */}
       <section className="w-full px-4 sm:px-6 md:px-8 py-4">
-        <div className="relative w-full aspect-[16/9] md:aspect-[21/9] bg-[#151713] border border-[#5C5E57]/40 overflow-hidden group">
+        <div data-cursor="video" className="relative w-full aspect-[16/9] md:aspect-[21/9] bg-[#151713] border border-[#5C5E57]/40 overflow-hidden group">
           {/* Background image preview */}
           <div
             className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-102"
